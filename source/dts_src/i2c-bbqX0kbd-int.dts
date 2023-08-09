@@ -3,14 +3,17 @@
 /plugin/;
 
 /{
-	compatible = "brcm,bcm2835";
+	compatible = "radxa,zero", "amlogic,g12a";
 
 	fragment@0 {
-		target = <&i2c1>;
+		target = <&i2c_AO>;
 
 		__overlay__ {
 			#address-cells = <1>;
 			#size-cells = <0>;
+			status = "okay";
+			pinctrl-0 = <&i2c_ao_sck_pins &i2c_ao_sda_pins>;
+			pinctrl-names = "default";
 			bbqX0kbd: bbqX0kbd@1f {
 				compatible = "wallComputer,bbqX0kbd";
 				reg = <0x1F>;

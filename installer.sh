@@ -124,7 +124,7 @@ if make && make dtbo ; then
 	else
 	    sudo sh -c "echo dtoverlay=i2c-bbqX0kbd >> /boot/config.txt"
 	fi
-	sudo cp i2c-bbqX0kbd.dtbo /boot/overlays/
+	sudo cp i2c-bbqX0kbd.dtbo /boot/dtbs/$(uname -r)/amlogic/overlay/
 
 	sudo sh -c "echo bbqX0kbd >> /etc/modules"
 	sudo cp bbqX0kbd.ko /lib/modules/$(uname -r)/kernel/drivers/i2c/bbqX0kbd.ko

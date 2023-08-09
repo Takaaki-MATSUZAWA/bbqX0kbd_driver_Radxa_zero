@@ -1,5 +1,7 @@
 # BBQX0KBD
 
+**NOTE : This driver is customized for Radxa Zero.**
+
 BBQX0KBD is an I2C Keyboard Device Driver for keyboard devices made by [Solder Party](https://www.solder.party/community/).  The following keyboards are currently supported by this driver: 
 1. [BB Q10 Keyboard PMOD](https://www.tindie.com/products/arturo182/bb-q10-keyboard-pmod/)
 2. [Keyboard FeatherWing](https://www.tindie.com/products/arturo182/keyboard-featherwing-qwerty-keyboard-26-lcd/)
