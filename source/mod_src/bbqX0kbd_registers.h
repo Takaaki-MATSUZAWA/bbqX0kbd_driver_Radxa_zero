@@ -90,7 +90,7 @@
 #define REG_GIN                         0x10
 #define REG_GIN_RESET_VALUE             0x00
 
-#define BBQ10_BRIGHTNESS_DELTA			16
+#define BBQ10_BRIGHTNESS_DELTA			33
 
 #if (BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 #define REG_CF2							0x14

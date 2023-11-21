@@ -1,31 +1,76 @@
-// SPDX-License-Identifier: GPL-2.0
 /dts-v1/;
 /plugin/;
 
-/{
+// Radxa Zero Interrupts
+// It took me a really long time to figure out how to get GPIO interrupts working
+// so if anyone is using this as a reference, this table should make it much simpler
+// I found it found on LKML (after many hours of pain)
+//
+// https://lkml.kernel.org/lkml/20181205064611.29076-3-xingyu.chen@amlogic.com/t/
+// 
+//
+// The Meson-G12A SoC uses the same GPIO interrupt controller IP block as the
+// other Meson SoCs, A totle of 100 pins can be spied on, which is the sum of:
+//
+//- 223:100 undefined (no interrupt)
+//- 99:97   3 pins on bank GPIOE
+//- 96:77   20 pins on bank GPIOX
+//- 76:61   16 pins on bank GPIOA
+//- 60:53   8 pins on bank GPIOC
+//- 52:37   16 pins on bank BOOT
+//- 36:28   9 pins on bank GPIOH
+//- 27:12   16 pins on bank GPIOZ
+//- 11:0    12 pins in the AO domain
+
+/ {
 	compatible = "radxa,zero", "amlogic,g12a";
 
-	fragment@0 {
-		target = <&i2c_AO>;
-
+    fragment@0 {
+		target = <&gpio>;
 		__overlay__ {
+            bbqX0kbd_pins: bbqX0kbd_pins {
+                amlogic,pins = "GPIOH_8";  //GPIOH_8
+                amlogic,function = "int";
+				#amlogic,enable-output=<1>; /* 0:output, 1:input */
+				#amlogic,pullup=<1>;
+                amlogic,pullupen = <0>;
+            };
+		};
+	};
+
+    fragment@1 {
+        target = <&vcc_5v>;
+        __overlay__ {
+            status = "disabled";
+        };
+    };
+
+    fragment@2 {
+        target = <&i2c_AO>;
+
+        __overlay__ {
+			/* needed to avoid dtc warning */
 			#address-cells = <1>;
 			#size-cells = <0>;
 			status = "okay";
-			pinctrl-0 = <&i2c_ao_sck_pins &i2c_ao_sda_pins>;
-			pinctrl-names = "default";
-			bbqX0kbd: bbqX0kbd@1f {
-				compatible = "wallComputer,bbqX0kbd";
-				reg = <0x1F>;
-				irq-gpio = <&gpio 11 0x2>;
-				interrupts = <11 2>;
-				interrupt-parent = <&gpio>;
-				interrupt-controller;
-			};
-		};
-	};
-	__overrides__ {
-		irq_pin = <&bbqX0kbd>,"interrupts:0";
-	};
-};
+			#pinctrl-0 = <&i2c_ao_sck_pins &i2c_ao_sda_pins>;
 
+			bbqX0kbd: bbqX0kbd@1f {
+				compatible = "bbqX0kbd";
+				reg = <0x1f>;
+
+				//pinctrl-names = "default";
+				pinctrl-0 = <&bbqX0kbd_pins>;
+
+				irq-gpio = <&gpio 451 2>; 
+				//
+				interrupts = <36 2>; // high-to-low edge triggered
+				interrupt-names = "bbqX0kbd_irq";
+				interrupt-parent = <&gpio_intc>;
+				interrupt-controller;
+
+				status = "okay";
+          	};
+        };
+    };
+};

@@ -82,7 +82,7 @@ struct bbqX0kbd_data {
 	uint8_t lockStatus;
 	uint8_t keyboardBrightness;
 	uint8_t lastKeyboardBrightness;
-#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING)
+#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING || BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 	uint8_t screenBrightness;
 	uint8_t lastScreenBrightness;
 #endif

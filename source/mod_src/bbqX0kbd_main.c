@@ -134,7 +134,7 @@ static void bbqX0kbd_set_brightness(struct bbqX0kbd_data *bbqX0kbd_data, unsigne
 	uint8_t swapVar;
 
 	switch (keycode) {
-#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING)
+#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING || BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 	case KEY_Q:
 		*reportKey = 1;
 		if (bbqX0kbd_data->screenBrightness > 0xFF - BBQ10_BRIGHTNESS_DELTA)
@@ -183,7 +183,7 @@ static void bbqX0kbd_set_brightness(struct bbqX0kbd_data *bbqX0kbd_data, unsigne
 	if (*reportKey == 0)
 		bbqX0kbd_write(bbqX0kbd_data->i2c_client, BBQX0KBD_I2C_ADDRESS, REG_BKL, &bbqX0kbd_data->keyboardBrightness, sizeof(uint8_t));
 
-#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING)
+#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING || BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 	if (*reportKey == 1)
 		bbqX0kbd_write(bbqX0kbd_data->i2c_client, BBQX0KBD_I2C_ADDRESS, REG_BK2, &bbqX0kbd_data->screenBrightness, sizeof(uint8_t));
 #endif
@@ -649,7 +649,7 @@ static int bbqX0kbd_probe(struct i2c_client *client, const struct i2c_device_id 
 
 	bbqX0kbd_data->modifier_keys_status = 0x00; // Serendipitously coincides with idle state of all keys.
 	bbqX0kbd_data->lockStatus = 0x00;
-#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING)
+#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING || BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 	bbqX0kbd_data->screenBrightness = 0xFF;
 	bbqX0kbd_data->lastScreenBrightness = bbqX0kbd_data->screenBrightness;
 	bbqX0kbd_write(client, BBQX0KBD_I2C_ADDRESS, REG_BK2, &bbqX0kbd_data->screenBrightness, sizeof(uint8_t));
@@ -706,7 +706,7 @@ static void bbqX0kbd_shutdown(struct i2c_client *client)
 		dev_err(&client->dev, "%s Could not read BBQX0KBD Software Version. Error: %d\n", __func__, returnValue);
 		return;
 	}
-#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING)
+#if (BBQX0KBD_TYPE == BBQ10KBD_FEATHERWING || BBQX0KBD_TYPE == BBQ20KBD_PMOD)
 	registerValue = 0x00;
 	returnValue = bbqX0kbd_write(client, BBQX0KBD_I2C_ADDRESS, REG_BK2, &registerValue, sizeof(uint8_t));
 	if (returnValue != 0) {
