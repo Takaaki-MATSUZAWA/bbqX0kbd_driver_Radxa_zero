@@ -1,0 +1,1 @@
+sudo apt --reinstall install linux-headers-$(uname -r)

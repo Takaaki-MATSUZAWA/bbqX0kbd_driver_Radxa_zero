@@ -5,6 +5,15 @@
  */
 
 #include "bbqX0kbd_main.h"
+#include "module.h"
+
+#define SYSFS
+#ifdef SYSFS
+
+#include "sysfs_iface.h"
+
+struct bbqX0kbd_data *g_ctx_for_sysfs = NULL;
+#endif
 
 #if (BBQX0KBD_INT == BBQX0KBD_NO_INT)
 static atomic_t keepWorking = ATOMIC_INIT(1);
@@ -551,6 +560,9 @@ static int bbqX0kbd_probe(struct i2c_client *client, const struct i2c_device_id 
 	int returnValue;
 	int i;
 	uint8_t registerValue = 0x00;
+#ifdef SYSFS
+	int rc;
+#endif
 
 #if (DEBUG_LEVEL & DEBUG_LEVEL_FE)
 	dev_info(&client->dev, "%s Probing BBQX0KBD.\n", __func__);
@@ -686,6 +698,14 @@ static int bbqX0kbd_probe(struct i2c_client *client, const struct i2c_device_id 
 		return returnValue;
 	}
 
+#ifdef SYSFS
+	// Initialize sysfs interface
+	g_ctx_for_sysfs = bbqX0kbd_data;
+	if ((rc = sysfs_probe())) {
+		return rc;
+	}
+#endif
+
 	return 0;
 }
 
@@ -715,6 +735,9 @@ static void bbqX0kbd_shutdown(struct i2c_client *client)
 	}
 #endif
 
+#ifdef SYSFS
+	sysfs_shutdown();
+#endif
 }
 
 static struct i2c_driver bbqX0kbd_driver = {

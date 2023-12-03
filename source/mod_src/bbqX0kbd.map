@@ -50,7 +50,3 @@ altgr keycode 57 = ampersand #Space Bar to &
 alt keycode 42 = Caps_Lock #Alt plus Left Shift to Capslock
 
 
-keycode 86 = Control 
-keycode 87 = PageDown 
-keycode 91 = PageUp  
-keycode 92 = Escape 
