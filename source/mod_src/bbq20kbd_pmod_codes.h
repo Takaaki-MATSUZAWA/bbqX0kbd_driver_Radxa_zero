@@ -67,8 +67,10 @@ static unsigned short keycodes[NUM_KEYCODES] = {
 #endif
 
 	[0x86] = KEY_ESC,
-	[0x91] = KEY_PAGEDOWN,
-	[0x87] = KEY_PAGEUP,
+	//[0x91] = KEY_PAGEDOWN,
+	//[0x87] = KEY_PAGEUP,
+	[0x91] = KEY_F6,
+	[0x87] = KEY_F7,
 	[0x92] = KEY_RIGHTCTRL,
 	[0xEE] = KEY_POWER,
 
