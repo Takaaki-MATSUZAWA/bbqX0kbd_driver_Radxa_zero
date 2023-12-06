@@ -140,7 +140,7 @@ Volume can be increased or decreased by `RTALT`+`Z` and `RTALT`+`X` respectively
            BBHackTool KEYBOARD LAYOUT
 -----+----+----+----+----+----+----+----+----+----
      |         |BR     ↑TPY-       |         |    
-Ctrl |    F6   |←TPX- (HOME) TPX+→ |    F7   |MENU
+ ESC |    F6   |←TPX- (HOME) TPX+→ |    F7   |ctrl
      |         |       ↓TPY+       |         |    
 -----+----+----+----+----+----+----+----+----+----
 --------------------------------------------------
