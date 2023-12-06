@@ -151,11 +151,11 @@ Volume can be increased or decreased by `RTALT`+`Z` and `RTALT`+`X` respectively
 -----+----+----+----+----+----+----+----+----+----
 *    |4   |5   |6   |/   |   :|;   |   '|   "| ESC
   A  | S  | D  | F  | G  |  H |  J |  K |  L |BKSP
-    ?|  Sx|   [|   ]|LEFT|HOME|RGHT|V+  |V-  |del 
+    %|  Sx|   [|   ]|LEFT|HOME|RGHT|V+  |V-  |del 
 -----+----+----+----+----+----+----+----+----+----
      |7   |8   |9   |?   |   !|,   |   .|   `|    
 L_ALT| Z  | X  | C  | V  |  B |  N |  M |  $ |entr
-     |  K+|  K-|   °|  < |DOWN| >  |MENU|Vx  |    
+     |  K+|  K-|  | |  < |DOWN| >  |MENU|Vx  |    
 -----+----+----+----+----+----+----+----+----+----
           |0   |TAB                |    |         
  L_SHIFT  | ~  |       SPACE       |RALT|R_SHIFT  

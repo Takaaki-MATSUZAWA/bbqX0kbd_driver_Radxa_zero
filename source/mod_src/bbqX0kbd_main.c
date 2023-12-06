@@ -713,6 +713,11 @@ static void bbqX0kbd_shutdown(struct i2c_client *client)
 {
 	int returnValue;
 	uint8_t registerValue = 0x00;
+
+#ifdef SYSFS
+	sysfs_shutdown();
+#endif
+
 #if (DEBUG_LEVEL & DEBUG_LEVEL_FE)
 	dev_info(&client->dev, "%s Shutting Down Keyboard And Screen Backlight.\n", __func__);
 #endif
@@ -735,9 +740,6 @@ static void bbqX0kbd_shutdown(struct i2c_client *client)
 	}
 #endif
 
-#ifdef SYSFS
-	sysfs_shutdown();
-#endif
 }
 
 static struct i2c_driver bbqX0kbd_driver = {
@@ -767,6 +769,11 @@ module_init(bbqX0kbd_init);
 static void __exit bbqX0kbd_exit(void)
 {
 	pr_info("%s Exiting BBQX0KBD.\n", __func__);
+
+#ifdef SYSFS
+	sysfs_shutdown();
+#endif
+
 #if (BBQX0KBD_INT == BBQX0KBD_NO_INT)
 	atomic_set(&keepWorking, 1);
 	flush_workqueue(workqueue_struct);
