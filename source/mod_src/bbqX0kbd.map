@@ -38,7 +38,7 @@ altgr keycode 20 = 0x005C #T to backslash
 altgr keycode 22 = 0x005E #U to ^
 altgr keycode 23 = equal #I to =
 altgr keycode 24 = 0x007B #O to {
-altgr keycode 25 = 0x007D #P to {
+altgr keycode 25 = 0x007D #P to }
 altgr keycode 30 = 0x0025 #A to %
 altgr keycode 32 = 0x005B #D to [
 altgr keycode 33 = 0x005D #F to ]

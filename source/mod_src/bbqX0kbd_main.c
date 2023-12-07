@@ -206,7 +206,8 @@ static void bbqX0kbd_work_handler(struct work_struct *work_struct)
 	uint8_t fifoData[2];
 	uint8_t registerValue;
 #if (BBQX0KBD_TYPE == BBQ20KBD_PMOD)
-	uint8_t registerX, registerY;
+	uint8_t registerX, registerY = 0;
+	const int8_t TOUCH_THULESHOLD = 25;
 #endif
 	uint8_t count;
 	uint8_t reportKey = 2;
@@ -338,6 +339,24 @@ static void bbqX0kbd_work_handler(struct work_struct *work_struct)
 		returnValue = bbqX0kbd_write(i2c_client, BBQX0KBD_I2C_ADDRESS, REG_INT, &registerValue, sizeof(uint8_t));
 		if (returnValue < 0)
 			dev_err(&i2c_client->dev, "%s Could not clear REG_INT. Error: %d\n", __func__, returnValue);
+#endif
+
+#if (BBQ20KBD_TRACKPAD_USE == BBQ20KBD_TRACKPAD_AS_KEYS)
+		if((int8_t)registerX < -TOUCH_THULESHOLD){
+			input_report_key(bbqX0kbd_data->input_dev, KEY_LEFT, TRUE);
+			input_report_key(bbqX0kbd_data->input_dev, KEY_LEFT, FALSE);
+		}else if((int8_t)registerX > TOUCH_THULESHOLD){
+			input_report_key(bbqX0kbd_data->input_dev, KEY_RIGHT, TRUE);
+			input_report_key(bbqX0kbd_data->input_dev, KEY_RIGHT, FALSE);
+		}
+
+		if((int8_t)registerY < -TOUCH_THULESHOLD){
+			input_report_key(bbqX0kbd_data->input_dev, KEY_UP, TRUE);
+			input_report_key(bbqX0kbd_data->input_dev, KEY_UP, FALSE);
+		}else if((int8_t)registerY > TOUCH_THULESHOLD){
+			input_report_key(bbqX0kbd_data->input_dev, KEY_DOWN, TRUE);
+			input_report_key(bbqX0kbd_data->input_dev, KEY_DOWN, FALSE);
+		}						
 #endif
 	}
 
